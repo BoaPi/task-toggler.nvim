@@ -9,7 +9,7 @@ Neovim plugin for toggling  tasks in markdown files
 
 ## Next Steps
 
-* [ ] setup folder structure
+* [x] setup folder structure
 * [ ] setup different commands to be registered and be able to use
 * [ ] implement at first regex variant to ensure correct setup
 * [ ] implement treesitter search
