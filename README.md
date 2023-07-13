@@ -1,16 +1,17 @@
 # task-toggler
 Neovim plugin for toggling  tasks in markdown files
 
-## To-Do's
+## features
 
-* [ ] instead of using regex to find tasks, use treesitter
+* [x] instead of using regex to find tasks, use treesitter
 * [ ] add multi-line toggle
 * [ ] add multi-line check & un-check
+* [ ] add complete file check & un-check
 
 ## Next Steps
 
 * [x] setup folder structure
-* [ ] setup different commands to be registered and be able to use
-* [ ] implement at first regex variant to ensure correct setup
-* [ ] implement treesitter search
-* [ ] implement replacement
+* [x] setup different commands to be registered and be able to use
+* [x] implement at first regex variant to ensure correct setup
+* [x] implement treesitter search
+* [x] implement replacement
