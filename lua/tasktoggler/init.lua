@@ -25,8 +25,12 @@ local allTaskQuery = vim.treesitter.query.parse(
 	]]
 )
 
---- @return TSNode, number
-local getBufferInfo = function()
+--- @param is_range boolean
+--- @return TSNode, number, number
+local getBufferInfo = function(is_range)
+	print(vim.cmd("echo mode()"))
+	print(vim.api.nvim_get_mode().mode)
+
 	-- get parser of current buffer and parse out the tree
 	-- finally get the root of the tree
 	local parser = vim.treesitter.get_parser(0, "markdown", {})
@@ -36,9 +40,17 @@ local getBufferInfo = function()
 	-- get current line of the cursor to determine which task should be toggled
 	-- reduce by "1" to get correct position for later comparison, due to the zero-index based
 	-- values of "iter_captures"
-	local currentLine = unpack(vim.api.nvim_win_get_cursor(0)) - 1
+	local row_start
+	local row_end
 
-	return root, currentLine
+	if is_range then
+		row_start = vim.api.nvim_buf_get_mark(0, "<")[1]
+		row_end = vim.api.nvim_buf_get_mark(0, ">")[1]
+	else
+		row_start = unpack(vim.api.nvim_win_get_cursor(0)) - 1
+	end
+
+	return root, row_start, row_end
 end
 
 --- @param root TSNode
@@ -63,12 +75,17 @@ M.setup = function()
 
 		replaceCaptures(root, currentLine, uncheckedQuery, checked)
 	end, {})
+
 	vim.api.nvim_create_user_command("TaskTogglerUncheck", function()
 		local root, currentLine = getBufferInfo()
 
 		replaceCaptures(root, currentLine, checkedQuery, unchecked)
 	end, {})
-	vim.api.nvim_create_user_command("TaskTogglerToggle", function() end, {})
+
+	vim.api.nvim_create_user_command("TaskTogglerToggle", function()
+		local test, row_1, row_2 = getBufferInfo(true)
+		print(test, row_1, row_2)
+	end, {})
 end
 
 return M
