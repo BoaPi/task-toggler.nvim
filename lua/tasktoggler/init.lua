@@ -56,14 +56,16 @@ local replaceCaptures = function(root, range_start, range_end, query, replacemen
 	for _, capture, _ in query:iter_captures(root, range_start) do
 		local row1, col1, _, col2 = capture:range()
 
-		print(capture:type())
-
 		-- extracted row and col are zero indexed, therefor +1 is added
 		-- afterwards for better comparison with range_start and range_end, which
 		-- are NOT zero indexed
 		-- if current line matches the capture row, insert replacement
 		-- capture of a task includes " [ ]", therefor + 1 needs to be added to replace part between brackets
-		if row1 + 1 >= range_start and row1 + 1 <= range_end then
+		--
+		-- special use case: toggle complete document
+		-- range_start = 1
+		-- range_end = -1
+		if (row1 + 1 >= range_start and row1 + 1 <= range_end) or (range_start == 1 and range_end == -1) then
 			vim.api.nvim_buf_set_text(0, row1, col1 + 1, row1, col2 - 1, { replacement })
 		end
 	end
@@ -78,6 +80,26 @@ M.setup = function()
 
 	vim.api.nvim_create_user_command("TaskTogglerUncheck", function()
 		local root, range_start, range_end = getBufferInfo()
+
+		replaceCaptures(root, range_start, range_end, checkedQuery, unchecked)
+	end, {})
+
+	vim.api.nvim_create_user_command("TaskTogglerCheckAll", function()
+		local root = getBufferInfo()
+
+		-- to check in the complete file we set the range manually
+		local range_start = 1
+		local range_end = -1
+
+		replaceCaptures(root, range_start, range_end, uncheckedQuery, checked)
+	end, {})
+
+	vim.api.nvim_create_user_command("TaskTogglerUncheckAll", function()
+		local root = getBufferInfo()
+
+		-- to check in the complete file we set the range manually
+		local range_start = 1
+		local range_end = -1
 
 		replaceCaptures(root, range_start, range_end, checkedQuery, unchecked)
 	end, {})
