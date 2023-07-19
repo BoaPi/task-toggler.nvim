@@ -48,38 +48,39 @@ local getBufferInfo = function()
 end
 
 --- @param root TSNode
---- @param line number
+--- @param range_start number
+--- @param range_end number
 --- @param query Query
 --- @param replacement string
-local replaceCaptures = function(root, line, query, replacement)
-	for _, capture, _ in query:iter_captures(root, line) do
-		local row1, col1 = capture:range()
+local replaceCaptures = function(root, range_start, range_end, query, replacement)
+	for _, capture, _ in query:iter_captures(root, range_start) do
+		local row1, col1, _, col2 = capture:range()
 
+		-- extracted row and col are zero indexed, therefor +1 is added
+		-- afterwards for better comparison with range_start and range_end, which
+		-- are NOT zero indexed
 		-- if current line matches the capture row, insert replacement
-		-- capture of a task includes " [ ]", therefor +1 and +2 to replace part between brackets
-		if row1 == line then
-			vim.api.nvim_buf_set_text(0, row1, col1 + 1, row1, col1 + 2, { replacement })
+		-- capture of a task includes " [ ]", therefor + 1 needs to be added  to replace part between brackets
+		if row1 + 1 >= range_start and row1 + 1 <= range_end then
+			vim.api.nvim_buf_set_text(0, row1, col1 + 1, row1, col2 - 1, { replacement })
 		end
 	end
 end
 
 M.setup = function()
 	vim.api.nvim_create_user_command("TaskTogglerCheck", function()
-		local root, currentLine = getBufferInfo()
+		local root, range_start, range_end = getBufferInfo()
 
-		replaceCaptures(root, currentLine, uncheckedQuery, checked)
+		replaceCaptures(root, range_start, range_end, uncheckedQuery, checked)
 	end, {})
 
 	vim.api.nvim_create_user_command("TaskTogglerUncheck", function()
-		local root, currentLine = getBufferInfo()
+		local root, range_start, range_end = getBufferInfo()
 
-		replaceCaptures(root, currentLine, checkedQuery, unchecked)
+		replaceCaptures(root, range_start, range_end, checkedQuery, unchecked)
 	end, {})
 
-	vim.api.nvim_create_user_command("TaskTogglerToggle", function()
-		local test, row_1, row_2 = getBufferInfo()
-		print(test, row_1, row_2)
-	end, {})
+	vim.api.nvim_create_user_command("TaskTogglerToggle", function() end, {})
 end
 
 return M
