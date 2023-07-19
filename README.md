@@ -4,9 +4,9 @@ Neovim plugin for toggling  tasks in markdown files
 ## features
 
 * [x] instead of using regex to find tasks, use treesitter
-* [ ] add multi-line toggle
-* [ ] add multi-line check & un-check
+* [x] add multi-line check & un-check
 * [ ] add complete file check & un-check
+* [ ] add multi-line toggle
 
 ## Next Steps
 
