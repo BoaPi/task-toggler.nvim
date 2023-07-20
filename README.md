@@ -1,11 +1,31 @@
 # task-toggler
 Neovim plugin for check or uncheck tasks in markdown files.
 
-## features
+## Features
 
 * instead of using regex to find tasks, use treesitter
 * multi-line check & un-check
 * complete file check & un-check
+
+## Installation
+
+### Packer
+
+```lua
+  use 'BoaPi/task-toggler'
+```
+
+### Lazy
+
+```lua
+  'BoaPi/task-toggler'
+```
+
+## Notes
+
+To be able to check & uncheck task in a **visual selection** (visual mode), it is neseccary to bind the command to a key combination,
+e.g. `<leader>tc`, otherwise the check & uncheck is not working proberly. The reason is, that otherwise the visual mode will be quit before
+and the start and end of the selected range is not correct.
 
 ## Commands
 
