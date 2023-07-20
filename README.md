@@ -1,5 +1,7 @@
 # task-toggler
-Neovim plugin for check or uncheck tasks in markdown files.
+Neovim plugin for check or uncheck tasks in markdown files. A Task is:
+* `[ ]` - unchecked task
+* `[x]` - checked task
 
 ## Features
 
