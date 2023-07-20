@@ -1,17 +1,47 @@
 # task-toggler
-Neovim plugin for toggling  tasks in markdown files
+Neovim plugin for check or uncheck tasks in markdown files.
 
 ## features
 
-* [x] instead of using regex to find tasks, use treesitter
-* [x] add multi-line check & un-check
-* [ ] add complete file check & un-check
-* [ ] add multi-line toggle
+* instead of using regex to find tasks, use treesitter
+* multi-line check & un-check
+* complete file check & un-check
 
-## Next Steps
+## Commands
 
-* [x] setup folder structure
-* [x] setup different commands to be registered and be able to use
-* [x] implement at first regex variant to ensure correct setup
-* [x] implement treesitter search
-* [x] implement replacement
+### Check Task
+check the selected line or selected range of tasks.
+```lua
+-- example keeps visual selection active
+"<leader>tc", "<CMD>TaskTogglerCheck<CR>"
+```
+
+```lua
+-- example switches into normal mode afterwrads
+"<leader>tc", "<CMD>TaskTogglerCheck<CR><Esc>"
+```
+
+To check all tasks in a file just use this command.
+```lua
+-- example switches into normal mode afterwrads
+"<leader>ta", "<CMD>TaskTogglerCheckAll<CR>"
+```
+
+
+### Uncheck Task
+check the selected line or selected range of tasks.
+```lua
+-- example keeps visual selection active
+"<leader>tu", "<CMD>TaskTogglerUncheck<CR>"
+```
+
+```lua
+-- example switches into normal mode afterwrads
+"<leader>tu", "<CMD>TaskTogglerUncheck<CR><Esc>"
+```
+
+To uncheck all tasks in a file just use this command.
+```lua
+-- example switches into normal mode afterwrads
+"<leader>tc", "<CMD>TaskTogglerUncheckAll<CR>"
+```
