@@ -9,12 +9,22 @@ Neovim plugin for check or uncheck tasks in markdown files. A Task is:
 * multi-line check & un-check
 * complete file check & un-check
 
+## Requirements
+
+* [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+* neovim >9.0.0 was tested, but should also run on previous versions
+
 ## Installation
 
 ### Packer
 
 ```lua
-  use 'BoaPi/task-toggler.nvim'
+use {
+  'BoaPi/task-toggler.nvim',
+  requires = "nvim-treesitter",
+  ft = "markdown"
+}
+
 ```
 
 ### Lazy
@@ -22,7 +32,9 @@ Neovim plugin for check or uncheck tasks in markdown files. A Task is:
 ```lua
 {
   'BoaPi/task-toggler.nvim',
-  config = true
+  config = true,
+  dependencies = "nvim-treesitter",
+  ft = "markdown"
 }
 ```
 
