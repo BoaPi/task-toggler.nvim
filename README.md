@@ -14,13 +14,16 @@ Neovim plugin for check or uncheck tasks in markdown files. A Task is:
 ### Packer
 
 ```lua
-  use 'BoaPi/task-toggler'
+  use 'BoaPi/task-toggler.nvim'
 ```
 
 ### Lazy
 
 ```lua
-  'BoaPi/task-toggler'
+{
+  'BoaPi/task-toggler.nvim',
+  config = true
+}
 ```
 
 ## Notes
@@ -63,7 +66,7 @@ check the selected line or selected range of tasks.
 ```
 
 To uncheck all tasks in a file just use this command.
-```lua
+```lua  
 -- example switches into normal mode afterwrads
 "<leader>tc", "<CMD>TaskTogglerUncheckAll<CR>"
 ```
